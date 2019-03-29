@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangli.shop.dao.ShopcartMapper">
+  <resultMap id="BaseResultMap" type="com.zhangli.shop.pojo.Shopcart">
+    <id column="shopCartId" jdbcType="INTEGER" property="shopcartid" />
+    <result column="goodsid" jdbcType="INTEGER" property="goodsid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shopCartId, goodsid, userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shopcart
+    where shopCartId = #{shopcartid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select 
+    goodsid
+    from shopcart
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByGoodsid" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shopcart
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shopcart
+    where shopCartId = #{shopcartid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByGoodsid" parameterType="java.lang.Integer">
+    delete from shopcart
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhangli.shop.pojo.Shopcart">
+    insert into shopcart (shopCartId, goodsid, userid
+      )
+    values (#{shopcartid,jdbcType=INTEGER}, #{goodsid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhangli.shop.pojo.Shopcart">
+    insert into shopcart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopcartid != null">
+        shopCartId,
+      </if>
+      <if test="goodsid != null">
+        goodsid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopcartid != null">
+        #{shopcartid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhangli.shop.pojo.Shopcart">
+    update shopcart
+    <set>
+      <if test="goodsid != null">
+        goodsid = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where shopCartId = #{shopcartid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhangli.shop.pojo.Shopcart">
+    update shopcart
+    set goodsid = #{goodsid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER}
+    where shopCartId = #{shopcartid,jdbcType=INTEGER}
+  </update>
+  <select id="selectBySelective" parameterType="com.zhangli.shop.pojo.Shopcart" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from shopcart
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+    and userid = #{userid,jdbcType=INTEGER}
+  </select>
+</mapper>

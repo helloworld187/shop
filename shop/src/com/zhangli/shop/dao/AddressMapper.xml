@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangli.shop.dao.AddressMapper">
+  <resultMap id="BaseResultMap" type="com.zhangli.shop.pojo.Address">
+    <id column="addressid" jdbcType="INTEGER" property="addressid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="addressinfo" jdbcType="VARCHAR" property="addressinfo" />
+    <result column="zipcode" jdbcType="VARCHAR" property="zipcode" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    addressid, userid, addressinfo, zipcode, telephone, name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from address
+    where addressid = #{addressid,jdbcType=INTEGER}
+  </select>
+   <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from address
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from address
+    where addressid = #{addressid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhangli.shop.pojo.Address">
+    insert into address (addressid, userid, addressinfo, 
+      zipcode, telephone, name
+      )
+    values (#{addressid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{addressinfo,jdbcType=VARCHAR}, 
+      #{zipcode,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhangli.shop.pojo.Address">
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="addressid != null">
+        addressid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="addressinfo != null">
+        addressinfo,
+      </if>
+      <if test="zipcode != null">
+        zipcode,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="addressid != null">
+        #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="addressinfo != null">
+        #{addressinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhangli.shop.pojo.Address">
+    update address
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="addressinfo != null">
+        addressinfo = #{addressinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where addressid = #{addressid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhangli.shop.pojo.Address">
+    update address
+    set userid = #{userid,jdbcType=INTEGER},
+      addressinfo = #{addressinfo,jdbcType=VARCHAR},
+      zipcode = #{zipcode,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR}
+    where addressid = #{addressid,jdbcType=INTEGER}
+  </update>
+</mapper>

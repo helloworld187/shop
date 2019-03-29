@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangli.shop.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.zhangli.shop.pojo.Goods">
+    <id column="goodsid" jdbcType="INTEGER" property="goodsid" />
+    <result column="categoryid" jdbcType="INTEGER" property="categoryid" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="gdescription" jdbcType="VARCHAR" property="gdescription" />
+    <result column="gprice" jdbcType="DOUBLE" property="gprice" />
+    <result column="photo" jdbcType="VARCHAR" property="photo" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zhangli.shop.pojo.Goods">
+    <result column="CONTEXT" jdbcType="LONGVARCHAR" property="context" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goodsid, categoryid, goodsName, gdescription, gprice, photo, userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllForPage" parameterType="Map" resultMap="ResultMapWithBLOBs">
+   select 
+    <include refid="Base_Column_List" />
+    from goods
+    where categoryid = #{categoryid,jdbcType=INTEGER}
+    limit #{page.start}, #{page.rows}
+  </select>
+  <select id="selectGoodsForPage" parameterType="Map" resultMap="ResultMapWithBLOBs">
+   select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+    limit #{page.start}, #{page.rows}
+  </select>
+   <select id="selectAllCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	select count(*) 
+  	from goods
+  	where categoryid = #{categoryid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllForFavoritePage" parameterType="Map" resultMap="ResultMapWithBLOBs">
+   select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+    limit #{page.start}, #{page.rows}
+  </select>
+  <select id="selectByCategoryid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where categoryid = #{categoryid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhangli.shop.pojo.Goods">
+    insert into goods (goodsid, categoryid, goodsName, 
+      gdescription, gprice, photo, 
+      userid)
+    values (#{goodsid,jdbcType=INTEGER}, #{categoryid,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, 
+      #{gdescription,jdbcType=VARCHAR}, #{gprice,jdbcType=DOUBLE}, #{photo,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhangli.shop.pojo.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsid != null">
+        goodsid,
+      </if>
+      <if test="categoryid != null">
+        categoryid,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="gdescription != null">
+        gdescription,
+      </if>
+      <if test="gprice != null">
+        gprice,
+      </if>
+      <if test="photo != null">
+        photo,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null">
+        #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="gdescription != null">
+        #{gdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null">
+        #{gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="photo != null">
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhangli.shop.pojo.Goods">
+    update goods
+    <set>
+      <if test="categoryid != null">
+        categoryid = #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="gdescription != null">
+        gdescription = #{gdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null">
+        gprice = #{gprice,jdbcType=DOUBLE},
+      </if>
+      <if test="photo != null">
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhangli.shop.pojo.Goods">
+    update goods
+    set categoryid = #{categoryid,jdbcType=INTEGER},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      gdescription = #{gdescription,jdbcType=VARCHAR},
+      gprice = #{gprice,jdbcType=DOUBLE},
+      photo = #{photo,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER}
+    where goodsid = #{goodsid,jdbcType=INTEGER}
+  </update>
+</mapper>

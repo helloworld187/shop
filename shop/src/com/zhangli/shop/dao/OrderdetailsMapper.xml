@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangli.shop.dao.OrderdetailsMapper">
+  <resultMap id="BaseResultMap" type="com.zhangli.shop.pojo.Orderdetails">
+    <id column="orderDetailesId" jdbcType="INTEGER" property="orderdetailesid" />
+    <result column="ordersid" jdbcType="INTEGER" property="ordersid" />
+    <result column="goodsid" jdbcType="INTEGER" property="goodsid" />
+    <result column="counts" jdbcType="INTEGER" property="counts" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderDetailesId, ordersid, goodsid, counts, userid
+  </sql>
+  <select id="selectGoodsidByPrimaryKey" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select 
+    goodsid
+    from orderdetails
+    where orderDetailesId = #{orderdetailesid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderdetails
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+   <select id="selectDetailsidByOrdersid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select 
+    orderdetailesid
+    from orderdetails
+    where ordersid = #{ordersid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orderdetails
+    where orderDetailesId = #{orderdetailesid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhangli.shop.pojo.Orderdetails">
+    insert into orderdetails (orderDetailesId, ordersid, goodsid, 
+      counts, userid)
+    values (#{orderdetailesid,jdbcType=INTEGER}, #{ordersid,jdbcType=INTEGER}, #{goodsid,jdbcType=INTEGER}, 
+      #{counts,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhangli.shop.pojo.Orderdetails">
+    insert into orderdetails
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderdetailesid != null">
+        orderDetailesId,
+      </if>
+      <if test="ordersid != null">
+        ordersid,
+      </if>
+      <if test="goodsid != null">
+        goodsid,
+      </if>
+      <if test="counts != null">
+        counts,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderdetailesid != null">
+        #{orderdetailesid,jdbcType=INTEGER},
+      </if>
+      <if test="ordersid != null">
+        #{ordersid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="counts != null">
+        #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhangli.shop.pojo.Orderdetails">
+    update orderdetails
+    <set>
+      <if test="ordersid != null">
+        ordersid = #{ordersid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null">
+        goodsid = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="counts != null">
+        counts = #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where orderDetailesId = #{orderdetailesid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhangli.shop.pojo.Orderdetails">
+    update orderdetails
+    set ordersid = #{ordersid,jdbcType=INTEGER},
+      goodsid = #{goodsid,jdbcType=INTEGER},
+      counts = #{counts,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER}
+    where orderDetailesId = #{orderdetailesid,jdbcType=INTEGER}
+  </update>
+</mapper>
